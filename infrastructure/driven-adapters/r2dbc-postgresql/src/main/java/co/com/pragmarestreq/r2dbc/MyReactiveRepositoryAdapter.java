@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
         RequestForm/* change for domain model */,
         RequestFormData/* change for adapter model */,
-        Long,
+        Integer,
         MyReactiveRepository
         > implements RequestFormRepository {
     public MyReactiveRepositoryAdapter(MyReactiveRepository repository, ObjectMapper mapper) {

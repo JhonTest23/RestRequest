@@ -1,9 +1,8 @@
 package co.com.pragmarestreq.r2dbc.entity;
 
-import co.com.pragmarestreq.model.state.State;
-import jakarta.persistence.Id;
-import jakarta.persistence.PersistenceUnit;
+import org.springframework.data.annotation.Id;
 import lombok.*;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
@@ -15,16 +14,9 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table(name = "estado")
 public class StateData {
     @Id
-    public long id_estado;
-    public String nombre;
-    public String descripcion;
+    @Column("id_estado")
+    private Integer idEstado;
+    private String nombre;
+    private String descripcion;
 
-    public StateData(String nombre, String descripcion) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-    }
-
-    public State toDomain(){
-        return  new State(this.nombre, this.descripcion);
-    }
 }
