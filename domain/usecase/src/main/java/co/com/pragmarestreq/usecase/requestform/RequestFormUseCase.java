@@ -25,6 +25,7 @@ public class RequestFormUseCase {
 
     public Mono<RequestForm> saveRequest(RequestForm requestForm) {
 
+        requestForm.setIdEstado(1); //Se agrega por defecto el estado Pendiente de revisión
         return Mono.zip(
                 loanTypeRepository.existsById(requestForm.getIdTipoPrestamo()),
                 stateRepository.existsById(requestForm.getIdEstado())
@@ -34,7 +35,6 @@ public class RequestFormUseCase {
 //            Double monto = requestForm.getMonto();
             if (!loanTypeExists) { return Mono.error(new Exception("Tipo de prestamo no existe")); }
 //            if (!stateExists) { return Mono.error(new Exception("Estado no existe")); }
-            requestForm.setIdEstado(1); //Se agrega por defecto el estado Pendiente de revisión
             return requestFormRepository.save(requestForm);
         });
     }
