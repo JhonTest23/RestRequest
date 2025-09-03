@@ -9,15 +9,7 @@ import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
 public class RequestFormUseCase {
-//    private RequestFormRepository requestRepository;
-//
-//    public RequestFormUseCase(RequestFormRepository requestRepository) {
-//        this.requestRepository = requestRepository;
-//    }
-//
-//    public Mono<RequestForm> saveRequest(RequestForm request) {
-//        return requestRepository.save(request);
-//    }
+
 
     private final RequestFormRepository requestFormRepository;
     private final Loan_typeRepository loanTypeRepository;
@@ -26,17 +18,13 @@ public class RequestFormUseCase {
     public Mono<RequestForm> saveRequest(RequestForm requestForm) {
 
         requestForm.setIdEstado(1); //Se agrega por defecto el estado Pendiente de revisión
-        return Mono.zip(
-                loanTypeRepository.existsById(requestForm.getIdTipoPrestamo()),
-                stateRepository.existsById(requestForm.getIdEstado())
-        ).flatMap(tuple -> {
-            boolean loanTypeExists = tuple.getT1();
-//            boolean stateExists = tuple.getT2();
-//            Double monto = requestForm.getMonto();
-            if (!loanTypeExists) { return Mono.error(new Exception("Tipo de prestamo no existe")); }
-//            if (!stateExists) { return Mono.error(new Exception("Estado no existe")); }
-            return requestFormRepository.save(requestForm);
-        });
+        return Mono.just("start").flatMap(x -> loanTypeRepository.existsById(requestForm.getIdTipoPrestamo()))
+                .flatMap(exists -> {
+                    if (!exists) {
+                        return Mono.error(new Exception("Tipo de prestamo no existe"));
+                    } else {
+                        return requestFormRepository.save(requestForm);
+                    }
+                });
     }
-
 }

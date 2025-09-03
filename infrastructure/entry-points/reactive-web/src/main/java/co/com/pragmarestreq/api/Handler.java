@@ -1,7 +1,9 @@
 package co.com.pragmarestreq.api;
 
 
+import co.com.pragmarestreq.model.jwtoken.PaginatedResponse;
 import co.com.pragmarestreq.model.requestform.RequestForm;
+import co.com.pragmarestreq.model.requestform.gateways.RequestFormRepository;
 import co.com.pragmarestreq.usecase.requestform.RequestFormUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -15,6 +17,7 @@ import reactor.core.publisher.Mono;
 public class Handler {
 
     private final RequestFormUseCase requestFormUseCase;
+    private final RequestFormRepository requestFormRepository;
 
     public Mono<ServerResponse> saveRequestForm(ServerRequest request) {
         return request.bodyToMono(RequestForm.class)
@@ -26,5 +29,22 @@ public class Handler {
 
     public  Mono<ServerResponse> TestUser(ServerRequest request){
         return ServerResponse.ok().contentType(MediaType.TEXT_PLAIN).body(Mono.just("Bienvenido a la prueba"), String.class);
+    }
+
+    public Mono<ServerResponse> getRequestForm(ServerRequest request) {
+        int page = Integer.parseInt(request.queryParam("page").orElse("0"));
+        int size = Integer.parseInt(request.queryParam("size").orElse("10"));
+
+        return requestFormRepository.countAllRequestForm()
+                .flatMap(totalElements ->
+                        requestFormRepository.findAllRequestFormsPaged(page, size)
+                                .collectList()
+                                .flatMap(requestForms -> {
+                                    PaginatedResponse<?> response =
+                                            new PaginatedResponse<>(requestForms, page, size, totalElements);
+                                    return ServerResponse.ok().bodyValue(response); // ✅ correct
+                                })
+                )
+                .switchIfEmpty(ServerResponse.notFound().build());
     }
 }

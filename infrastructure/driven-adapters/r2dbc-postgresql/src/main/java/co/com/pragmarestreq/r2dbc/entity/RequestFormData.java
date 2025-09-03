@@ -1,5 +1,6 @@
 package co.com.pragmarestreq.r2dbc.entity;
 
+import co.com.pragmarestreq.model.requestform.RequestForm;
 import org.springframework.data.annotation.Id;
 import lombok.*;
 import org.springframework.data.relational.core.mapping.Column;
@@ -27,4 +28,14 @@ public class RequestFormData {
     @Column("id_tipo_prestamo")
     private Integer idTipoPrestamo;
 
+    public RequestForm toDomain() {
+        return RequestForm.builder()
+                .idSolicitud(this.idSolicitud)
+                .monto(this.monto)
+                .plazo(this.plazo)
+                .email(this.email)
+                .idEstado(this.idEstado)
+                .idTipoPrestamo(this.idTipoPrestamo)
+                .build();
+    }
 }
