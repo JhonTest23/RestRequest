@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter implements WebFilter {
         String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
+            String token = authHeader.replace("Bearer ","");
 
             if (jwtUtil.validateToken(token)) {
                 String userId = jwtUtil.extractUserId(token);

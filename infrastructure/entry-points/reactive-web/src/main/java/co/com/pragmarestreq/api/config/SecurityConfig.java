@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .logout(ServerHttpSecurity.LogoutSpec::disable)         // disable logout
                 .authorizeExchange(exchange -> exchange
                         .pathMatchers(HttpMethod.POST,"/api/v1/solicitud").hasAnyAuthority("ROLE_CLIENTE")
-                        .pathMatchers(HttpMethod.GET, "/api/v1/solicitud").hasAnyAuthority("ROLE_ASESOR")
+                        .pathMatchers(HttpMethod.GET, "/api/v1/solicitud").permitAll()//.hasAnyAuthority("ROLE_ASESOR")
                         .pathMatchers(
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",

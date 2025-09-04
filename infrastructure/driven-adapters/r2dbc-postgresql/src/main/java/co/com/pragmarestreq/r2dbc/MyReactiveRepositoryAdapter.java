@@ -1,5 +1,6 @@
 package co.com.pragmarestreq.r2dbc;
 
+import co.com.pragmarestreq.model.jwtoken.RequestFormReport;
 import co.com.pragmarestreq.model.requestform.RequestForm;
 import co.com.pragmarestreq.model.requestform.gateways.RequestFormRepository;
 import co.com.pragmarestreq.r2dbc.entity.RequestFormData;
@@ -37,10 +38,14 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
         return repository.countAllRequestForm();
     }
 
-    @Override
-    public Flux<RequestForm> findAllRequestFormsPaged(int size, int offset) {
-        return repository.findAllRequestFormsPaged(size, offset)
-                .map(RequestFormData::toDomain); // map DB entity to domain model
-    }
+//    @Override
+//    public Flux<RequestFormReport> findAllRequestFormsPaged(int size, int offset) {
+//        return repository.findAllRequestFormsPaged(size, offset)
+//                .map(RequestFormReport::toDomain); // map DB entity to domain model
+//    }
 
+    @Override
+    public Flux<RequestFormReport> findAllRequestFormsPaged(int size, int offset) {
+        return repository.findAllRequestFormsPaged(size, offset);
+    }
 }

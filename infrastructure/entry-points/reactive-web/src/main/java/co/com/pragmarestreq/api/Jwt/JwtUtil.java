@@ -52,6 +52,10 @@ public class JwtUtil {
         return getClaims(token).get("role", String.class);
     }
 
+    public String extractEmail(String token) {
+        return getClaims(token).get("email", String.class);
+    }
+
     public Collection<? extends GrantedAuthority> getAuthorities(String role) {
         // Spring Security expects roles as: "ROLE_ADMIN", "ROLE_CLIENT"
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
