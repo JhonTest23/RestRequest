@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class RequestFormReport {
+    private Integer idalias;
     private Double monto;
     private Integer plazo;
     private String email;

@@ -16,7 +16,8 @@ public interface MyReactiveRepository  extends ReactiveCrudRepository<RequestFor
     Mono<Long> countAllRequestForm();
 
     @Query("""
-            SELECT r.monto as monto, r.plazo  as plazo, r.email  as email,
+            SELECT r.id_solicitud as idalias,
+                   r.monto as monto, r.plazo  as plazo, r.email  as email,
                    l.nombre as tipo_prestamo, l.tasa_interes as tasa_interes,
                    s.nombre as estado_solicitud, 0 as deuda_total_mensual_solicitudes_aprobadas
             FROM solicitud r

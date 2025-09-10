@@ -1,5 +1,6 @@
 package co.com.pragmarestreq.r2dbc.entity;
 
+import co.com.pragmarestreq.model.state.State;
 import org.springframework.data.annotation.Id;
 import lombok.*;
 import org.springframework.data.relational.core.mapping.Column;
@@ -18,5 +19,14 @@ public class StateData {
     private Integer idEstado;
     private String nombre;
     private String descripcion;
+    private Boolean mover_estado_manual;
 
+    public State toDomain() {
+        return State.builder()
+                .idEstado(idEstado)
+                .nombre(nombre)
+                .descripcion(descripcion)
+                .mover_estado_manual(mover_estado_manual)
+                .build();
+    }
 }

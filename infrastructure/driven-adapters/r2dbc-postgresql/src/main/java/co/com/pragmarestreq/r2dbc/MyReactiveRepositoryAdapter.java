@@ -48,4 +48,25 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
     public Flux<RequestFormReport> findAllRequestFormsPaged(int size, int offset) {
         return repository.findAllRequestFormsPaged(size, offset);
     }
+
+    @Override
+    public Mono<RequestForm> updateRequestFormState(Integer idSolicitud, Integer idEstado) {
+        return repository.findById(idSolicitud)
+                .flatMap(existing -> {
+                    existing.setIdEstado(idEstado); // ✅ solo cambiamos el estado
+                    return repository.save(existing);
+                })
+                .map(this::toModel);
+    }
+
+    private RequestForm toModel(RequestFormData data) {
+        return RequestForm.builder()
+                .idSolicitud(data.getIdSolicitud())
+                .monto(data.getMonto())
+                .plazo(data.getPlazo())
+                .email(data.getEmail())
+                .idEstado(data.getIdEstado())
+                .idTipoPrestamo(data.getIdTipoPrestamo())
+                .build();
+    }
 }

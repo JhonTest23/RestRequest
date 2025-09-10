@@ -31,4 +31,10 @@ public class StateReactiveRepositoryAdapter  extends ReactiveAdapterOperations<
         return repository.existsById(id);
     }
 
+    @Override
+    public Mono<State> findByIdEstado(Integer idEstado) {
+        return repository.findByIdEstado(idEstado)
+                .map(StateData::toDomain);
+    }
+
 }

@@ -12,4 +12,5 @@ public class State {
     public Integer idEstado;
     public String nombre;
     public String descripcion;
+    public Boolean mover_estado_manual;
 }

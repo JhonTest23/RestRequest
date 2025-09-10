@@ -1,4 +1,4 @@
-package co.com.pragmarestreq.api.Jwt;
+package co.com.pragmarestreq.api.jwtokenconfig;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

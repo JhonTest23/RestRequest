@@ -1,4 +1,4 @@
-package co.com.pragmarestreq.api.Jwt;
+package co.com.pragmarestreq.api.jwtokenconfig;
 
 import co.com.pragmarestreq.model.jwtoken.gateways.PasswordEncrypter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -9,4 +9,5 @@ public interface RequestFormRepository {
     Mono<RequestForm> save(RequestForm request);
     Mono<Long> countAllRequestForm();
     Flux<RequestFormReport> findAllRequestFormsPaged(int size, int offset);
+    Mono<RequestForm> updateRequestFormState(Integer idSolicitud, Integer idEstado);
 }

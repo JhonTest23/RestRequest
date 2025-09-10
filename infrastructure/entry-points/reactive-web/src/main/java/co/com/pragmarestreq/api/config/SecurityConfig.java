@@ -1,6 +1,6 @@
 package co.com.pragmarestreq.api.config;
 
-import co.com.pragmarestreq.api.Jwt.JwtAuthenticationFilter;
+import co.com.pragmarestreq.api.jwtokenconfig.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,6 +26,7 @@ public class SecurityConfig {
                 .authorizeExchange(exchange -> exchange
                         .pathMatchers(HttpMethod.POST,"/api/v1/solicitud").hasAnyAuthority("ROLE_CLIENTE")
                         .pathMatchers(HttpMethod.GET, "/api/v1/solicitud").permitAll()//.hasAnyAuthority("ROLE_ASESOR")
+                        .pathMatchers(HttpMethod.PUT, "/api/v1/solicitud").permitAll()//.hasAnyAuthority("ROLE_ASESOR")
                         .pathMatchers(
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",

@@ -1,4 +1,4 @@
-package co.com.pragmarestreq.api.Jwt;
+package co.com.pragmarestreq.api.jwtokenconfig;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
