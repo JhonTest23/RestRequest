@@ -55,12 +55,6 @@ public class Handler {
                 });
     }
 
-    public Mono<ServerResponse> TestUser(ServerRequest request) {
-        log.info("👤 TestUser endpoint hit");
-        return ServerResponse.ok()
-                .contentType(MediaType.TEXT_PLAIN)
-                .body(Mono.just("Bienvenido a la prueba"), String.class);
-    }
 
     public Mono<ServerResponse> getRequestForm(ServerRequest request) {
         String token = request.headers().firstHeader(HttpHeaders.AUTHORIZATION).replace("Bearer","").replace(" ","");

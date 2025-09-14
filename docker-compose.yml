@@ -1,20 +1,43 @@
 services:
-
-  postgres:
-    image: postgres:latest
+  db:
+    image: postgres:17.5
+    container_name: restrequests_db
     restart: always
-    # set shared memory limit when using docker compose
-    # or set shared memory limit when deploy via swarm stack
-    #volumes:
-    #  - type: tmpfs
-    #    target: /dev/shm
-    #    tmpfs:
-    #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "p*5tgr35q1"
-      POSTGRES_DB: "PragmaDB"
+      POSTGRES_DB: ${DATASOURCE_DB}
+      POSTGRES_USER: ${DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${DATASOURCE_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - ./postgres:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+
+  flyway:
+    image: flyway/flyway:11.0
+    command: >
+      -url=${SPRING_FLYWAY_URL}
+      -user=${DATASOURCE_USERNAME}
+      -password=${DATASOURCE_PASSWORD}
+      -schemas=public
+      -locations=filesystem:/flyway/sql
+      migrate
+    volumes:
+      - ./src/main/resources/db/migration:/flyway/sql
+    depends_on:
+      - db
+
+  app:
+    build:
+      context: .
+      dockerfile: deployment/Dockerfile
+    container_name: rest_requestform
+    restart: always
+    depends_on:
+      - db
+      - flyway
+    env_file: .env
+    ports:
+      - "8082:8080"
+
+volumes:
+  postgres_data:

@@ -72,13 +72,11 @@ public class RouterRest {
                             }
                     )
             ),
-            @RouterOperation(path = "/api/v1/solicitud", beanClass = Handler.class, beanMethod = "updateRequestFormState"),
-            @RouterOperation(path = "/api/v1/solicitud", beanClass = Handler.class, beanMethod = "TestUser")
+            @RouterOperation(path = "/api/v1/solicitud", beanClass = Handler.class, beanMethod = "updateRequestFormState")
     })
     public RouterFunction<ServerResponse> userRoutes(Handler handler) {
         return route(POST("/api/v1/solicitud"), handler::saveRequestForm)
                 .andRoute(GET("/api/v1/solicitud"), handler::getRequestForm)
-                .andRoute(PUT("/api/v1/solicitud"), handler::updateRequestFormState)
-                .andRoute(GET("/api/v3/usuarios"), handler::TestUser);
+                .andRoute(PUT("/api/v1/solicitud"), handler::updateRequestFormState);
     }
 }
